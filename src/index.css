@@ -6,5 +6,11 @@ html, body, #root {
   padding: 0;
   background: transparent;
   color: white;
-  overflow: hidden;
+  /* REMOVE overflow: hidden */
+  overflow-x: hidden; /* optional: hide horizontal scroll if layout overflows */
+  overflow-y: auto;   /* allows vertical scroll */
+  scroll-behavior: smooth;
+}
+html {
+  scroll-behavior: smooth;
 }
