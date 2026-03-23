@@ -4,78 +4,37 @@ interface SpaceBackgroundProps {
   darkMode: boolean;
 }
 
-const STAR_LAYERS = [
-  { count: 60, speed: 0.15, size: [0.5, 1.0], opacity: [0.3, 0.6] },  // far — slow
-  { count: 40, speed: 0.35, size: [1.0, 1.8], opacity: [0.5, 0.8] },  // mid
-  { count: 20, speed: 0.6,  size: [1.8, 2.5], opacity: [0.7, 1.0] },  // near — fast
-];
-
-function generateStars() {
-  return STAR_LAYERS.flatMap((layer, layerIndex) =>
-    Array.from({ length: layer.count }, (_, i) => ({
-      id: `${layerIndex}-${i}`,
-      x: Math.random() * 100,
-      y: Math.random() * 200, // spread over 200vh so stars fill scrollable area
-      size: Math.random() * (layer.size[1] - layer.size[0]) + layer.size[0],
-      opacity: Math.random() * (layer.opacity[1] - layer.opacity[0]) + layer.opacity[0],
-      twinkleDuration: Math.random() * 4 + 3,
-      twinkleDelay: Math.random() * 5,
-      speed: layer.speed,
-    }))
-  );
+interface Star {
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  twinkleSpeed: number;
+  twinkleOffset: number;
+  speedY: number; // parallax speed
+  baseY: number; // original Y position
 }
 
-const stars = generateStars();
+const STAR_COUNT = 160;
+const CONNECTION_RADIUS = 120; // px — how close cursor must be to a star to activate
+const STAR_LINK_RADIUS = 100; // px — how close two stars must be to connect
+const CURSOR_PULL_RADIUS = 160; // px — stars slightly drift toward cursor
 
 export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<HTMLDivElement>(null);
+  const starsRef = useRef<Star[]>([]);
+  const mouseRef = useRef({ x: -9999, y: -9999 });
   const scrollRef = useRef(0);
   const rafRef = useRef<number>(0);
+  const timeRef = useRef(0);
 
-  // Parallax scroll for stars
   useEffect(() => {
-    if (!darkMode) return;
-
-    const handleScroll = () => {
-      scrollRef.current = window.scrollY;
-    };
-
-    const tick = () => {
-      if (starsRef.current) {
-        const children = starsRef.current.children;
-        let i = 0;
-        STAR_LAYERS.forEach((layer) => {
-          for (let s = 0; s < layer.count; s++) {
-            const el = children[i] as HTMLElement;
-            if (el) {
-              const offset = scrollRef.current * layer.speed;
-              el.style.transform = `translateY(${offset}px)`;
-            }
-            i++;
-          }
-        });
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    rafRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, [darkMode]);
-
-  // Shooting stars canvas
-  useEffect(() => {
-    if (!darkMode) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Size canvas
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -83,58 +42,203 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
     resize();
     window.addEventListener("resize", resize);
 
-    let animId: number;
-    let lastShoot = 0;
+    // Generate stars
+    starsRef.current = Array.from({ length: STAR_COUNT }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight * 3, // spread over 3x viewport height
+      baseY: Math.random() * window.innerHeight * 3,
+      size: Math.random() * 1.8 + 0.4,
+      opacity: Math.random() * 0.5 + 0.3,
+      twinkleSpeed: Math.random() * 0.02 + 0.005,
+      twinkleOffset: Math.random() * Math.PI * 2,
+      speedY: Math.random() * 0.4 + 0.1, // parallax depth
+    }));
 
-    const drawShootingStar = (timestamp: number) => {
+    // Mouse tracking
+    const onMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    };
+    const onMouseLeave = () => {
+      mouseRef.current = { x: -9999, y: -9999 };
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseleave", onMouseLeave);
+
+    // Scroll tracking
+    const onScroll = () => {
+      scrollRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Draw loop
+    const draw = (timestamp: number) => {
+      timeRef.current = timestamp;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (timestamp - lastShoot > 5000) {
-        lastShoot = timestamp;
-        const x = Math.random() * canvas.width * 0.6;
-        const y = Math.random() * canvas.height * 0.4;
-        const length = Math.random() * 120 + 80;
-        const angle = Math.PI / 6;
-        let progress = 0;
+      const scroll = scrollRef.current;
+      const mouse = mouseRef.current;
+      const isDark = darkMode;
 
-        const animate = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          progress += 0.035;
-          if (progress > 1) return;
+      // Visible stars (those within viewport after parallax offset)
+      const visibleStars: (Star & { screenX: number; screenY: number })[] = [];
 
-          const grad = ctx.createLinearGradient(
-            x + Math.cos(angle) * length * (progress - 0.3),
-            y + Math.sin(angle) * length * (progress - 0.3),
-            x + Math.cos(angle) * length * progress,
-            y + Math.sin(angle) * length * progress
-          );
-          grad.addColorStop(0, "rgba(147, 197, 253, 0)");
-          grad.addColorStop(1, "rgba(147, 197, 253, 0.75)");
+      starsRef.current.forEach((star) => {
+        const screenY = star.baseY - scroll * star.speedY;
+        if (screenY < -20 || screenY > canvas.height + 20) return;
+        visibleStars.push({ ...star, screenX: star.x, screenY });
+      });
 
-          ctx.beginPath();
-          ctx.strokeStyle = grad as unknown as string;
-          ctx.lineWidth = 1.5;
-          ctx.moveTo(
-            x + Math.cos(angle) * length * (progress - 0.3),
-            y + Math.sin(angle) * length * (progress - 0.3)
-          );
-          ctx.lineTo(
-            x + Math.cos(angle) * length * progress,
-            y + Math.sin(angle) * length * progress
-          );
-          ctx.stroke();
-          requestAnimationFrame(animate);
-        };
-        animate();
+      // Draw constellation lines between stars near cursor
+      if (isDark) {
+        visibleStars.forEach((starA, i) => {
+          const dxA = starA.screenX - mouse.x;
+          const dyA = starA.screenY - mouse.y;
+          const distToMouse = Math.sqrt(dxA * dxA + dyA * dyA);
+          if (distToMouse > CONNECTION_RADIUS) return;
+
+          visibleStars.forEach((starB, j) => {
+            if (j <= i) return;
+            const dx = starA.screenX - starB.screenX;
+            const dy = starA.screenY - starB.screenY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > STAR_LINK_RADIUS) return;
+
+            const dxB = starB.screenX - mouse.x;
+            const dyB = starB.screenY - mouse.y;
+            const distBToMouse = Math.sqrt(dxB * dxB + dyB * dyB);
+            if (distBToMouse > CONNECTION_RADIUS) return;
+
+            // Fade line based on distance from cursor
+            const alpha =
+              (1 - distToMouse / CONNECTION_RADIUS) *
+              (1 - distBToMouse / CONNECTION_RADIUS) *
+              0.6;
+
+            ctx.beginPath();
+            ctx.moveTo(starA.screenX, starA.screenY);
+            ctx.lineTo(starB.screenX, starB.screenY);
+            ctx.strokeStyle = `rgba(147, 197, 253, ${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          });
+        });
+      } else {
+        // Light mode — softer violet lines
+        visibleStars.forEach((starA, i) => {
+          const dxA = starA.screenX - mouse.x;
+          const dyA = starA.screenY - mouse.y;
+          const distToMouse = Math.sqrt(dxA * dxA + dyA * dyA);
+          if (distToMouse > CONNECTION_RADIUS) return;
+
+          visibleStars.forEach((starB, j) => {
+            if (j <= i) return;
+            const dx = starA.screenX - starB.screenX;
+            const dy = starA.screenY - starB.screenY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > STAR_LINK_RADIUS) return;
+
+            const dxB = starB.screenX - mouse.x;
+            const dyB = starB.screenY - mouse.y;
+            const distBToMouse = Math.sqrt(dxB * dxB + dyB * dyB);
+            if (distBToMouse > CONNECTION_RADIUS) return;
+
+            const alpha =
+              (1 - distToMouse / CONNECTION_RADIUS) *
+              (1 - distBToMouse / CONNECTION_RADIUS) *
+              0.35;
+
+            ctx.beginPath();
+            ctx.moveTo(starA.screenX, starA.screenY);
+            ctx.lineTo(starB.screenX, starB.screenY);
+            ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          });
+        });
       }
 
-      animId = requestAnimationFrame(drawShootingStar);
+      // Draw stars
+      visibleStars.forEach((star) => {
+        const twinkle =
+          Math.sin(timestamp * star.twinkleSpeed + star.twinkleOffset) * 0.3 +
+          0.7;
+
+        // Cursor proximity glow
+        const dx = star.screenX - mouse.x;
+        const dy = star.screenY - mouse.y;
+        const distToMouse = Math.sqrt(dx * dx + dy * dy);
+        const nearCursor = distToMouse < CURSOR_PULL_RADIUS;
+        const glowBoost = nearCursor
+          ? (1 - distToMouse / CURSOR_PULL_RADIUS) * 1.5
+          : 0;
+
+        const finalOpacity = Math.min(
+          1,
+          star.opacity * twinkle + glowBoost * 0.4,
+        );
+        const finalSize = star.size + glowBoost * 1.2;
+
+        if (isDark) {
+          // Glow halo for stars near cursor
+          if (nearCursor && glowBoost > 0.1) {
+            const grd = ctx.createRadialGradient(
+              star.screenX,
+              star.screenY,
+              0,
+              star.screenX,
+              star.screenY,
+              finalSize * 4,
+            );
+            grd.addColorStop(0, `rgba(147, 197, 253, ${glowBoost * 0.4})`);
+            grd.addColorStop(1, "rgba(147, 197, 253, 0)");
+            ctx.beginPath();
+            ctx.arc(star.screenX, star.screenY, finalSize * 4, 0, Math.PI * 2);
+            ctx.fillStyle = grd;
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.arc(star.screenX, star.screenY, finalSize, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${finalOpacity})`;
+          ctx.fill();
+        } else {
+          // Light mode — small dark dots as "stars"
+          if (nearCursor && glowBoost > 0.1) {
+            const grd = ctx.createRadialGradient(
+              star.screenX,
+              star.screenY,
+              0,
+              star.screenX,
+              star.screenY,
+              finalSize * 4,
+            );
+            grd.addColorStop(0, `rgba(139, 92, 246, ${glowBoost * 0.3})`);
+            grd.addColorStop(1, "rgba(139, 92, 246, 0)");
+            ctx.beginPath();
+            ctx.arc(star.screenX, star.screenY, finalSize * 4, 0, Math.PI * 2);
+            ctx.fillStyle = grd;
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.arc(star.screenX, star.screenY, finalSize * 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${finalOpacity * 0.6})`;
+          ctx.fill();
+        }
+      });
+
+      // Shooting star (dark only)
+      rafRef.current = requestAnimationFrame(draw);
     };
 
-    animId = requestAnimationFrame(drawShootingStar);
+    rafRef.current = requestAnimationFrame(draw);
+
     return () => {
-      cancelAnimationFrame(animId);
+      cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("scroll", onScroll);
     };
   }, [darkMode]);
 
@@ -150,7 +254,7 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
         }}
       />
 
-      {/* Light mode: soft texture overlay */}
+      {/* Light mode tint */}
       {!darkMode && (
         <div
           className="absolute inset-0"
@@ -163,7 +267,7 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
 
       {/* Grid */}
       <div
-        className="absolute inset-0 transition-opacity duration-700"
+        className="absolute inset-0"
         style={{
           backgroundImage: darkMode
             ? "linear-gradient(rgba(99,120,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(99,120,255,0.07) 1px, transparent 1px)"
@@ -172,30 +276,9 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
         }}
       />
 
-      {/* Stars — dark mode only, with parallax applied via JS */}
-      {darkMode && (
-        <div ref={starsRef} className="absolute inset-0 overflow-hidden">
-          {stars.map((star) => (
-            <div
-              key={star.id}
-              className="absolute rounded-full will-change-transform"
-              style={{
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                background: "white",
-                opacity: star.opacity,
-                animation: `twinkle ${star.twinkleDuration}s ease-in-out ${star.twinkleDelay}s infinite`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-
       {/* Nebula glows */}
       <div
-        className="absolute rounded-full blur-[160px] transition-all duration-700"
+        className="absolute rounded-full blur-[160px]"
         style={{
           width: "500px",
           height: "500px",
@@ -207,7 +290,7 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
         }}
       />
       <div
-        className="absolute rounded-full blur-[200px] transition-all duration-700"
+        className="absolute rounded-full blur-[200px]"
         style={{
           width: "400px",
           height: "400px",
@@ -219,21 +302,8 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
         }}
       />
 
-      {/* Shooting star canvas */}
-      {darkMode && (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
-          style={{ opacity: 0.8 }}
-        />
-      )}
-
-      <style>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.1; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.3); }
-        }
-      `}</style>
+      {/* Star + constellation canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );
 }

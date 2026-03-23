@@ -23,7 +23,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.6 },
     );
 
     sections.forEach((sec) => observer.observe(sec));
@@ -33,7 +33,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
   useEffect(() => {
     if (!navRef.current) return;
     const activeLink = navRef.current.querySelector(
-      `a[href="#${activeSection}"]`
+      `a[href="#${activeSection}"]`,
     ) as HTMLAnchorElement;
     if (activeLink) {
       const { offsetLeft, offsetWidth } = activeLink;
@@ -49,9 +49,12 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
           : "bg-white/60 border-gray-300 text-black"
       }`}
     >
-      <h1 className="text-xl font-bold tracking-wide">My Portfolio</h1>
+      <h1 className="text-xl font-bold tracking-wide">Jason Kangs Portfolio</h1>
 
-      <div ref={navRef} className="relative flex items-center space-x-6 text-sm font-medium">
+      <div
+        ref={navRef}
+        className="relative flex items-center space-x-6 text-sm font-medium"
+      >
         {["about", "projects", "contact"].map((section) => (
           <a
             key={section}

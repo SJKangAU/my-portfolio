@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
 import SpaceBackground from "./components/SpaceBackground";
 
 export default function App() {
@@ -33,19 +35,9 @@ export default function App() {
           <Hero darkMode={darkMode} />
           <About darkMode={darkMode} />
 
-          <section
-            id="projects"
-            className="min-h-screen flex items-center justify-center"
-          >
-            <h2 className="text-3xl font-semibold">Projects Section</h2>
-          </section>
+          <Projects darkMode={darkMode} />
 
-          <section
-            id="contact"
-            className="min-h-screen flex items-center justify-center"
-          >
-            <h2 className="text-3xl font-semibold">Contact Section</h2>
-          </section>
+          <Contact darkMode={darkMode} />
         </main>
       </div>
     </div>

@@ -7,7 +7,6 @@ interface HeroProps {
 export default function Hero({ darkMode }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Subtle parallax on mouse move
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
       const el = containerRef.current;
@@ -22,48 +21,22 @@ export default function Hero({ darkMode }: HeroProps) {
   }, []);
 
   const skills = [
-    "TypeScript", "React", "Firebase",
-    "Python", "Node.js", "SQL",
+    "TypeScript",
+    "React",
+    "Firebase",
+    "Python",
+    "Node.js",
+    "SQL",
   ];
 
   return (
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen flex flex-col justify-center px-8 md:px-20 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-8 text-center overflow-hidden"
       style={{ "--mx": "0px", "--my": "0px" } as unknown as React.CSSProperties}
     >
-      {/* Background grid */}
-      <div
-        className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ${
-          darkMode ? "opacity-20" : "opacity-10"
-        }`}
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(120,120,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(120,120,255,0.15) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-          transform:
-            "translate(calc(var(--mx) * 0.4), calc(var(--my) * 0.4))",
-          transition: "transform 0.12s ease-out",
-        }}
-      />
-
-      {/* Glow blob */}
-      <div
-        className={`pointer-events-none absolute rounded-full blur-[120px] transition-all duration-700 ${
-          darkMode
-            ? "bg-blue-600/25 w-[480px] h-[480px] -top-24 -right-24"
-            : "bg-violet-300/40 w-[400px] h-[400px] -top-12 -right-12"
-        }`}
-        style={{
-          transform:
-            "translate(calc(var(--mx) * -0.6), calc(var(--my) * -0.6))",
-          transition: "transform 0.18s ease-out",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl">
+      <div className="relative z-10 max-w-3xl w-full flex flex-col items-center">
         {/* Eyebrow */}
         <p
           className={`mb-4 text-sm tracking-[0.25em] uppercase font-medium animate-fade-in ${
@@ -95,7 +68,7 @@ export default function Hero({ darkMode }: HeroProps) {
 
         {/* Tagline */}
         <p
-          className={`mt-6 text-lg md:text-xl max-w-2xl leading-relaxed animate-fade-in ${
+          className={`mt-6 text-lg md:text-xl leading-relaxed animate-fade-in ${
             darkMode ? "text-gray-400" : "text-gray-600"
           }`}
           style={{ animationDelay: "0.35s" }}
@@ -107,7 +80,7 @@ export default function Hero({ darkMode }: HeroProps) {
 
         {/* Skill chips */}
         <div
-          className="mt-8 flex flex-wrap gap-2 animate-fade-in"
+          className="mt-8 flex flex-wrap justify-center gap-2 animate-fade-in"
           style={{ animationDelay: "0.5s" }}
         >
           {skills.map((skill) => (
@@ -126,7 +99,7 @@ export default function Hero({ darkMode }: HeroProps) {
 
         {/* CTAs */}
         <div
-          className="mt-10 flex flex-wrap gap-4 animate-fade-in"
+          className="mt-10 flex flex-wrap justify-center gap-4 animate-fade-in"
           style={{ animationDelay: "0.65s" }}
         >
           <a
