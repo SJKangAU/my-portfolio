@@ -2,12 +2,18 @@
 
 A personal portfolio website built with React, TypeScript, Vite, and Tailwind CSS v4.
 
+Live site: coming soon
+
 ## Features
 
+- Space-themed background with parallax star field across 3 depth layers
+- Constellation cursor interactions — lines draw between stars near your cursor
 - Dark / light mode toggle with `localStorage` persistence
-- Fixed navbar with smooth-scroll active section detection
-- Animated underline indicator that tracks the current section
-- Responsive layout with scrollable content sections
+- Fixed navbar with smooth-scroll active section detection and animated underline
+- Hero section with staggered fade-in animations and mouse parallax
+- About section with bio, education cards, and categorised tech stack
+- Projects section with expandable card-to-grid animation, GitHub, live demo, and report links
+- Contact section with email, LinkedIn, and GitHub cards
 
 ## Tech Stack
 
@@ -64,7 +70,12 @@ my-portfolio/
 │   ├── assets/
 │   │   └── react.svg
 │   ├── components/
-│   │   └── Navbar.tsx
+│   │   ├── Navbar.tsx        # Fixed navbar with scroll-based active section detection
+│   │   ├── SpaceBackground.tsx # Canvas star field, parallax, constellation interactions
+│   │   ├── Hero.tsx          # Landing section with name, tagline, and CTAs
+│   │   ├── About.tsx         # Bio, education, and tech stack
+│   │   ├── Projects.tsx      # Expandable project cards with links
+│   │   └── Contact.tsx       # Email, LinkedIn, and GitHub links
 │   ├── App.tsx
 │   ├── index.css
 │   └── main.tsx
@@ -75,6 +86,17 @@ my-portfolio/
 ├── tsconfig.node.json
 └── vite.config.ts
 ```
+
+## Projects
+
+| Project                   | Links                                                |
+| ------------------------- | ---------------------------------------------------- |
+| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)   |
+| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard) |
+| Recipe App                | Report (coming soon)                                 |
+| Bias in Job Salaries      | Report (coming soon)                                 |
+| Computer Vision Project   | Report (coming soon)                                 |
+| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)   |
 
 ## License
 
