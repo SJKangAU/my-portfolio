@@ -2,7 +2,7 @@
 
 A personal portfolio website built with React, TypeScript, Vite, and Tailwind CSS v4.
 
-Live site: https://your-vercel-url.vercel.app
+Live site: https://sjkang.dev
 
 ## Features
 
