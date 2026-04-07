@@ -79,7 +79,7 @@ const projects: Project[] = [
     ],
     tech: ["Python", "Pandas", "NumPy", "Scikit-learn"],
     // Repo on inaccessible account — report to be hosted on deployment
-    report: "#",
+    report: "/MachineLearning_SalaryBias_Report.pdf",
   },
   {
     title: "Computer Vision Project",
@@ -95,7 +95,7 @@ const projects: Project[] = [
     ],
     tech: ["Python", "PyTorch", "Computer Vision", "NumPy"],
     // Repo on inaccessible account — report to be hosted on deployment
-    report: "#",
+    report: "/ComputerVision_Report.pdf",
   },
   {
     title: "Portfolio Website",
@@ -245,7 +245,12 @@ export default function Projects({ darkMode }: ProjectsProps) {
             onClick={(e) => e.stopPropagation()}
             className={`inline-flex items-center gap-1.5 font-semibold border rounded-lg transition-all duration-200 hover:scale-105 ${size} ${linkBtn}`}
           >
-            <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="currentColor">
+            <svg
+              width={iconSize}
+              height={iconSize}
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
             </svg>
             GitHub
@@ -261,7 +266,14 @@ export default function Projects({ darkMode }: ProjectsProps) {
             onClick={(e) => e.stopPropagation()}
             className={`inline-flex items-center gap-1.5 font-semibold border rounded-lg transition-all duration-200 hover:scale-105 ${size} ${linkBtn}`}
           >
-            <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width={iconSize}
+              height={iconSize}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <circle cx="12" cy="12" r="10" />
               <line x1="2" y1="12" x2="22" y2="12" />
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -279,7 +291,14 @@ export default function Projects({ darkMode }: ProjectsProps) {
             onClick={(e) => e.stopPropagation()}
             className={`inline-flex items-center gap-1.5 font-semibold border rounded-lg transition-all duration-200 hover:scale-105 ${size} ${linkBtn}`}
           >
-            <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width={iconSize}
+              height={iconSize}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <polyline points="14 2 14 8 20 8" />
               <line x1="16" y1="13" x2="8" y2="13" />
@@ -299,9 +318,10 @@ export default function Projects({ darkMode }: ProjectsProps) {
       className={`relative px-8 md:px-20 py-24 border-b ${border}`}
     >
       <div className="max-w-5xl mx-auto flex flex-col items-center">
-
         {/* ── Section header ── */}
-        <p className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}>
+        <p
+          className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
+        >
           My Work
         </p>
         <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}>
@@ -319,10 +339,14 @@ export default function Projects({ darkMode }: ProjectsProps) {
           {projects.map((project) => (
             <div
               key={project.title}
-              ref={(el) => { cardRefs.current[project.title] = el; }}
+              ref={(el) => {
+                cardRefs.current[project.title] = el;
+              }}
               onClick={() => open(project.title)}
               className={`flex flex-col rounded-xl border p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
-                darkMode ? "hover:shadow-blue-900/30" : "hover:shadow-violet-200/60"
+                darkMode
+                  ? "hover:shadow-blue-900/30"
+                  : "hover:shadow-violet-200/60"
               }`}
             >
               {/* Title row */}
@@ -365,7 +389,6 @@ export default function Projects({ darkMode }: ProjectsProps) {
           className={`overflow-auto border shadow-2xl ${expandedCard}`}
         >
           <div className="p-8 h-full flex flex-col">
-
             {/* Close button */}
             <button
               onClick={close}
@@ -405,7 +428,9 @@ export default function Projects({ darkMode }: ProjectsProps) {
               </p>
 
               {/* Key features */}
-              <h4 className={`text-xs uppercase tracking-widest font-semibold mb-3 ${muted}`}>
+              <h4
+                className={`text-xs uppercase tracking-widest font-semibold mb-3 ${muted}`}
+              >
                 Key Features
               </h4>
               <ul className="space-y-2 mb-8">
@@ -414,7 +439,9 @@ export default function Projects({ darkMode }: ProjectsProps) {
                     key={feature}
                     className={`flex items-start gap-2 text-sm ${muted}`}
                   >
-                    <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${featureDot}`} />
+                    <span
+                      className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${featureDot}`}
+                    />
                     {feature}
                   </li>
                 ))}

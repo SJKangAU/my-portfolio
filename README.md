@@ -10,10 +10,11 @@ Live site: https://sjkang.dev
 - Constellation cursor interactions — lines draw between stars near your cursor
 - Dark / light mode toggle with `localStorage` persistence
 - Fixed navbar with smooth-scroll active section detection and animated underline
-- Hero section with staggered fade-in animations and mouse parallax
+- Responsive navbar with hamburger menu on mobile
+- Hero section with staggered fade-in animations, mouse parallax, and resume link
 - About section with bio, education cards, and categorised tech stack
 - Projects section with expandable card-to-grid animation, GitHub, live demo, and report links
-- Contact section with email, LinkedIn, and GitHub cards
+- Contact section with email, LinkedIn, GitHub, and resume cards
 
 ## Tech Stack
 
@@ -65,17 +66,18 @@ npm run lint
 ```
 my-portfolio/
 ├── public/
-│   └── vite.svg
+│   ├── vite.svg
+│   └── Jason_Kang_Resume.pdf
 ├── src/
 │   ├── assets/
 │   │   └── react.svg
 │   ├── components/
-│   │   ├── Navbar.tsx        # Fixed navbar with scroll-based active section detection
+│   │   ├── Navbar.tsx          # Fixed navbar with scroll detection and mobile hamburger menu
 │   │   ├── SpaceBackground.tsx # Canvas star field, parallax, constellation interactions
-│   │   ├── Hero.tsx          # Landing section with name, tagline, and CTAs
-│   │   ├── About.tsx         # Bio, education, and tech stack
-│   │   ├── Projects.tsx      # Expandable project cards with links
-│   │   └── Contact.tsx       # Email, LinkedIn, and GitHub links
+│   │   ├── Hero.tsx            # Landing section with name, tagline, CTAs, and resume link
+│   │   ├── About.tsx           # Bio, education, and tech stack
+│   │   ├── Projects.tsx        # Expandable project cards with links
+│   │   └── Contact.tsx         # Email, LinkedIn, GitHub, and resume cards
 │   ├── App.tsx
 │   ├── index.css
 │   └── main.tsx
