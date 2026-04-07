@@ -33,6 +33,28 @@ const links = [
       </svg>
     ),
   },
+  {
+    label: "Resume",
+    value: "View & Download",
+    href: "/Jason_Kang_Resume.pdf",
+    target: "_blank",
+    icon: (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Contact({ darkMode }: ContactProps) {
@@ -51,7 +73,9 @@ export default function Contact({ darkMode }: ContactProps) {
     >
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
         {/* Section label */}
-        <p className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}>
+        <p
+          className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
+        >
           Get In Touch
         </p>
 
@@ -64,22 +88,24 @@ export default function Contact({ darkMode }: ContactProps) {
           free to reach out through any of the links below.
         </p>
 
-        {/* Link cards */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Link cards — 2 cols on mobile, 4 on desktop */}
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-6">
           {links.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              target={link.label !== "Email" ? "_blank" : undefined}
-              rel={link.label !== "Email" ? "noopener noreferrer" : undefined}
-              className={`flex flex-col items-center gap-3 rounded-xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`flex flex-col items-center gap-3 rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
                 darkMode
                   ? "hover:shadow-blue-900/30 text-gray-300 hover:text-blue-300"
                   : "hover:shadow-violet-200/60 text-gray-600 hover:text-violet-600"
               }`}
             >
               <span className={accent}>{link.icon}</span>
-              <span className={`text-sm font-bold ${heading}`}>{link.label}</span>
+              <span className={`text-sm font-bold ${heading}`}>
+                {link.label}
+              </span>
               <span className={`text-xs ${muted}`}>{link.value}</span>
             </a>
           ))}
@@ -87,7 +113,8 @@ export default function Contact({ darkMode }: ContactProps) {
 
         {/* Footer note */}
         <p className={`mt-16 text-xs ${muted}`}>
-          © {new Date().getFullYear()} Jason Kang · Built with React & Tailwind CSS
+          © {new Date().getFullYear()} Jason Kang · Built with React & Tailwind
+          CSS
         </p>
       </div>
     </section>

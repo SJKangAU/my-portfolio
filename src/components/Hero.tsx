@@ -102,6 +102,7 @@ export default function Hero({ darkMode }: HeroProps) {
           className="mt-10 flex flex-wrap justify-center gap-4 animate-fade-in"
           style={{ animationDelay: "0.65s" }}
         >
+          {/* Primary CTA */}
           <a
             href="#projects"
             className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 shadow-lg hover:scale-105 active:scale-95 ${
@@ -112,6 +113,21 @@ export default function Hero({ darkMode }: HeroProps) {
           >
             View Projects
           </a>
+
+          {/* Resume — opens PDF in new tab, browser handles viewing and downloading */}
+          <a
+            href="/Jason_Kang_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
+              darkMode
+                ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
+                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-600"
+            }`}
+          >
+            View Resume
+          </a>
+
           <a
             href="https://www.linkedin.com/in/sj-kang"
             target="_blank"
@@ -124,6 +140,7 @@ export default function Hero({ darkMode }: HeroProps) {
           >
             LinkedIn ↗
           </a>
+
           <a
             href="#contact"
             className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
