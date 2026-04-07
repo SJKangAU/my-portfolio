@@ -91,14 +91,14 @@ my-portfolio/
 
 ## Projects
 
-| Project                   | Links                                                |
-| ------------------------- | ---------------------------------------------------- |
-| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)   |
-| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard) |
-| Recipe App                | Report (coming soon)                                 |
-| Bias in Job Salaries      | Report (coming soon)                                 |
-| Computer Vision Project   | Report (coming soon)                                 |
-| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)   |
+| Project                   | Links                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)                                       |
+| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard)                                     |
+| Recipe App                | Report (coming soon)                                                                     |
+| Bias in Job Salaries      | [Report](https://github.com/SJKangAU/my-portfolio/MachineLearning_SalaryBias_Report.pdf) |
+| Computer Vision Project   | [Report](https://github.com/SJKangAU/my-portfolio/ComputerVision_Report.pdf)             |
+| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)                                       |
 
 ## License
 
