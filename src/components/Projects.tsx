@@ -35,20 +35,20 @@ const projects: Project[] = [
     liveDemo: "https://www.intellijourney.education/",
   },
   {
-    title: "Recipe App",
+    title: "Sua Hair Studio Booking System",
     shortDescription:
-      "Full-stack application where users can upload, review, and rate recipes with real-time data syncing.",
+      "Full-stack booking system for a real Melbourne hair salon, built with React, TypeScript, and Firebase.",
     longDescription:
-      "A full-stack recipe sharing platform built with React and Firebase. Users can create accounts, upload their own recipes with ingredients and steps, browse community recipes, and leave reviews and star ratings. All data is synced in real time via Firestore.",
+      "A production booking system built for Sua Hair Studio in Melbourne. Features a customer-facing booking flow and an admin dashboard for managing appointments, staff, and availability. Built with React, TypeScript, and Firebase Firestore.",
     features: [
-      "User authentication with Firebase Auth",
-      "Recipe creation with image upload support",
-      "Star rating and review system",
-      "Real-time updates via Firestore listeners",
+      "Real-time appointment booking with Firebase Firestore",
+      "Admin dashboard for managing bookings and availability",
+      "Staff and service management",
+      "Mobile-responsive booking interface",
     ],
-    tech: ["React", "Firebase", "TypeScript"],
-    // Repo on inaccessible account — report to be hosted on deployment
-    report: "#",
+    tech: ["React", "TypeScript", "Firebase", "React Router"],
+    github: "https://github.com/SJKangAU/your-repo-name",
+    liveDemo: "https://sua-hair.vercel.app/",
   },
   {
     title: "Multi-threaded Whiteboard",
