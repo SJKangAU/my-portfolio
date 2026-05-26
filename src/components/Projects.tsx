@@ -47,7 +47,7 @@ const projects: Project[] = [
       "Mobile-responsive booking interface",
     ],
     tech: ["React", "TypeScript", "Firebase", "React Router"],
-    github: "https://github.com/SJKangAU/your-repo-name",
+    github: "https://github.com/SJKangAU/sua-hair",
     liveDemo: "https://sua-hair.vercel.app/",
   },
   {
