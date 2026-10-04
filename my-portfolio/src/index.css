@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -8,7 +10,7 @@ html, body, #root {
   color: white;
   /* REMOVE overflow: hidden */
   overflow-x: hidden; /* optional: hide horizontal scroll if layout overflows */
-  overflow-y: auto;   /* allows vertical scroll */
+  overflow-y: auto; /* allows vertical scroll */
   scroll-behavior: smooth;
 }
 html {
