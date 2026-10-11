@@ -41,7 +41,13 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
   // Close mobile menu when a link is tapped
   const handleNavClick = () => setMenuOpen(false);
 
-  const sections = ["about", "projects", "contact"];
+  const sections = [
+    { id: "about", label: "About" },
+    { id: "experience", label: "Experience" },
+    { id: "projects", label: "Projects" },
+    { id: "case-study", label: "Case Study" },
+    { id: "contact", label: "Contact" },
+  ];
 
   return (
     <nav
@@ -65,17 +71,17 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
         >
           {sections.map((section) => (
             <a
-              key={section}
-              href={`#${section}`}
-              className={`capitalize px-1 pb-1 transition-colors ${
-                activeSection === section
+              key={section.id}
+              href={`#${section.id}`}
+              className={`px-1 pb-1 transition-colors ${
+                activeSection === section.id
                   ? darkMode
                     ? "text-blue-400"
-                    : "text-purple-600"
+                    : "text-purple-700"
                   : "hover:opacity-70"
               }`}
             >
-              {section}
+              {section.label}
             </a>
           ))}
 
@@ -123,6 +129,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
               darkMode ? "text-gray-300" : "text-gray-700"
             }`}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             <span
               className={`block w-5 h-0.5 transition-all duration-300 ${
@@ -146,7 +153,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
       {/* ── Mobile dropdown menu ── */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          menuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+          menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div
@@ -156,18 +163,18 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
         >
           {sections.map((section) => (
             <a
-              key={section}
-              href={`#${section}`}
+              key={section.id}
+              href={`#${section.id}`}
               onClick={handleNavClick}
-              className={`capitalize pt-3 transition-colors ${
-                activeSection === section
+              className={`pt-3 transition-colors ${
+                activeSection === section.id
                   ? darkMode
                     ? "text-blue-400"
-                    : "text-purple-600"
+                    : "text-purple-700"
                   : "hover:opacity-70"
               }`}
             >
-              {section}
+              {section.label}
             </a>
           ))}
         </div>

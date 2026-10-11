@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Experience from "./components/Experience";
 import Projects from "./components/Projects";
+import CaseStudy from "./components/CaseStudy";
 import Contact from "./components/Contact";
 import SpaceBackground from "./components/SpaceBackground";
 
@@ -35,7 +37,11 @@ export default function App() {
           <Hero darkMode={darkMode} />
           <About darkMode={darkMode} />
 
+          <Experience darkMode={darkMode} />
+
           <Projects darkMode={darkMode} />
+
+          <CaseStudy darkMode={darkMode} />
 
           <Contact darkMode={darkMode} />
         </main>

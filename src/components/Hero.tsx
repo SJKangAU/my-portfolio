@@ -25,8 +25,10 @@ export default function Hero({ darkMode }: HeroProps) {
     "React",
     "Firebase",
     "Python",
-    "Node.js",
     "SQL",
+    "Requirements",
+    "Process Mapping",
+    "Excel VBA",
   ];
 
   return (
@@ -39,12 +41,12 @@ export default function Hero({ darkMode }: HeroProps) {
       <div className="relative z-10 max-w-3xl w-full flex flex-col items-center">
         {/* Eyebrow */}
         <p
-          className={`mb-4 text-sm tracking-[0.25em] uppercase font-medium animate-fade-in ${
-            darkMode ? "text-blue-400" : "text-violet-600"
+          className={`mb-4 text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.25em] uppercase font-medium animate-fade-in ${
+            darkMode ? "text-blue-400" : "text-violet-700"
           }`}
           style={{ animationDelay: "0.1s" }}
         >
-          Full-Stack Developer · Melbourne, AU
+          Technology Graduate · Business Analysis &amp; Automation · Melbourne, AU
         </p>
 
         {/* Name */}
@@ -73,9 +75,9 @@ export default function Hero({ darkMode }: HeroProps) {
           }`}
           style={{ animationDelay: "0.35s" }}
         >
-          Master of IT grad who builds responsive apps and automates the tedious
-          stuff. Currently improving guest experiences at Crown while shipping
-          side projects in React and Firebase.
+          Master of IT graduate who turns messy processes into working tools. I map
+          processes, write requirements and build automations, from Excel VBA
+          to full-stack web apps.
         </p>
 
         {/* Skill chips */}
@@ -116,13 +118,13 @@ export default function Hero({ darkMode }: HeroProps) {
 
           {/* Resume — opens PDF in new tab, browser handles viewing and downloading */}
           <a
-            href="/Jason_Kang_Resume.pdf"
+            href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
               darkMode
                 ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
-                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-600"
+                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-700"
             }`}
           >
             View Resume
@@ -135,7 +137,7 @@ export default function Hero({ darkMode }: HeroProps) {
             className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
               darkMode
                 ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
-                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-600"
+                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-700"
             }`}
           >
             LinkedIn ↗
@@ -146,7 +148,7 @@ export default function Hero({ darkMode }: HeroProps) {
             className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
               darkMode
                 ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
-                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-600"
+                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-700"
             }`}
           >
             Get in Touch
@@ -157,7 +159,7 @@ export default function Hero({ darkMode }: HeroProps) {
       {/* Scroll indicator */}
       <div
         className={`absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce opacity-50 ${
-          darkMode ? "text-gray-500" : "text-gray-400"
+          darkMode ? "text-gray-600" : "text-gray-400"
         }`}
       >
         <span className="text-xs tracking-widest uppercase">Scroll</span>

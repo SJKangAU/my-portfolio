@@ -5,8 +5,16 @@ interface AboutProps {
 const skills = {
   Languages: ["TypeScript", "JavaScript", "Python", "Java"],
   "Frameworks & Libraries": ["React", "Node.js", "Firebase"],
-  "Web & Cloud": ["RESTful APIs", "Firebase Hosting", "Docker", "AWS"],
-  "Tools & Practices": ["Git", "VS Code", "Agile / Scrum"],
+  "Web & Cloud": ["RESTful APIs", "Firebase Hosting"],
+  "Business Analysis": ["Requirements Analysis", "Process Mapping", "UAT"],
+  "Tools & Practices": [
+    "Git",
+    "VS Code",
+    "Agile / Scrum",
+    "Jira",
+    "Confluence",
+    "AroFlo",
+  ],
   "Data & Automation": ["SQL", "Python Pandas", "NumPy", "Excel VBA"],
 };
 
@@ -15,23 +23,23 @@ const education = [
     degree: "Master of Information Technology",
     major: "Major in Computing",
     institution: "The University of Melbourne",
-    period: "Jan 2021 – Nov 2023",
+    period: "Graduated 2023",
   },
-  // {
-  //   degree: "Bachelor of Agriculture",
-  //   major: "Major in Agricultural Economics",
-  //   institution: "The University of Melbourne",
-  //   period: "Jan 2018 – Dec 2020",
-  // },
+  {
+    degree: "Bachelor of Agriculture",
+    major: "Agricultural Economics",
+    institution: "The University of Melbourne",
+    period: "Graduated 2020",
+  },
 ];
 
 export default function About({ darkMode }: AboutProps) {
   const border = darkMode ? "border-gray-800" : "border-gray-300";
-  const muted = darkMode ? "text-gray-400" : "text-gray-500";
+  const muted = darkMode ? "text-gray-400" : "text-gray-600";
   const card = darkMode
     ? "bg-gray-900/60 border-gray-800"
     : "bg-white/50 border-gray-300";
-  const accent = darkMode ? "text-blue-400" : "text-violet-600";
+  const accent = darkMode ? "text-blue-400" : "text-violet-700";
   const chipBg = darkMode
     ? "bg-blue-500/10 border-blue-500/30 text-blue-300"
     : "bg-violet-100 border-violet-300 text-violet-700";
@@ -66,19 +74,21 @@ export default function About({ darkMode }: AboutProps) {
                 Background
               </h3>
               <p className={`text-base leading-relaxed ${muted}`}>
-                I'm a Melbourne-based developer with a Master of IT (Computing)
-                from the University of Melbourne. My background is a bit
-                unconventional — I started in Agricultural Economics before
-                pivoting fully into software, which means I bring a
-                problem-solving mindset that's grounded in real-world
-                constraints, not just code.
+                I'm a Melbourne-based technology graduate with a Master of IT
+                (Computing) from the University of Melbourne. My background is a
+                bit unconventional — I started in Agricultural Economics before
+                moving into technology, which means I bring a problem-solving
+                mindset that's grounded in real-world constraints, not just
+                code.
               </p>
               <p className={`mt-4 text-base leading-relaxed ${muted}`}>
-                I focus on full-stack web development, data analytics, and
-                process automation. I enjoy building things that are actually
-                useful — whether that's a user-facing app or a script that
-                eliminates repetitive work. Currently at Crown Melbourne leading
-                a CPT project team while shipping personal projects on the side.
+                I move between the business and the technology: understanding
+                how work gets done, then building or specifying what makes it
+                easier. I focus on process improvement, automation and practical
+                software. Currently at Crown Melbourne{" "}
+                {/* TODO [CONFIRM]: expand "CPT" once its meaning is confirmed; neutral wording until then. */}
+                leading an improvement project while shipping personal projects
+                on the side.
               </p>
             </div>
 
@@ -112,7 +122,7 @@ export default function About({ darkMode }: AboutProps) {
             <h3
               className={`text-xs uppercase tracking-widest font-semibold mb-4 ${muted}`}
             >
-              Technical Skills
+              Skills
             </h3>
             <div className="space-y-6">
               {Object.entries(skills).map(([category, items]) => (

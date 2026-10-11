@@ -36,7 +36,7 @@ const links = [
   {
     label: "Resume",
     value: "View & Download",
-    href: "/Jason_Kang_Resume.pdf",
+    href: "/resume.pdf",
     target: "_blank",
     icon: (
       <svg
@@ -59,9 +59,9 @@ const links = [
 
 export default function Contact({ darkMode }: ContactProps) {
   const border = darkMode ? "border-gray-800" : "border-gray-300";
-  const accent = darkMode ? "text-blue-400" : "text-violet-600";
+  const accent = darkMode ? "text-blue-400" : "text-violet-700";
   const heading = darkMode ? "text-white" : "text-gray-900";
-  const muted = darkMode ? "text-gray-400" : "text-gray-500";
+  const muted = darkMode ? "text-gray-400" : "text-gray-600";
   const card = darkMode
     ? "bg-gray-900/60 border-gray-800 hover:border-blue-500/50"
     : "bg-white/50 border-gray-300 hover:border-violet-400";
@@ -99,7 +99,7 @@ export default function Contact({ darkMode }: ContactProps) {
               className={`flex flex-col items-center gap-3 rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
                 darkMode
                   ? "hover:shadow-blue-900/30 text-gray-300 hover:text-blue-300"
-                  : "hover:shadow-violet-200/60 text-gray-600 hover:text-violet-600"
+                  : "hover:shadow-violet-200/60 text-gray-600 hover:text-violet-700"
               }`}
             >
               <span className={accent}>{link.icon}</span>

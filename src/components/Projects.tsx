@@ -7,6 +7,8 @@ interface ProjectsProps {
 interface Project {
   title: string;
   shortDescription: string;
+  // Short "My role / outcome" line shown on the card and in the expanded view
+  role?: string;
   longDescription: string;
   features: string[];
   tech: string[];
@@ -19,9 +21,27 @@ interface Project {
 // Project data — links updated to reflect actual availability
 const projects: Project[] = [
   {
+    title: "Sua Hair Studio Booking System",
+    shortDescription:
+      "Full-stack booking system for a real Melbourne hair salon, built with React, TypeScript, and Firebase.",
+    role: "Designed and built for a real client; ran requirements workshops and maintained a prioritised backlog.",
+    longDescription:
+      "A production booking system built for Sua Hair Studio in Melbourne. Features a customer-facing booking flow and an admin dashboard for managing appointments, staff, and availability. Built with React, TypeScript, and Firebase Firestore.",
+    features: [
+      "Real-time appointment booking with Firebase Firestore",
+      "Admin dashboard for managing bookings and availability",
+      "Staff and service management",
+      "Mobile-responsive booking interface",
+    ],
+    tech: ["React", "TypeScript", "Firebase", "React Router"],
+    github: "https://github.com/SJKangAU/sua-hair",
+    liveDemo: "https://sua-hair.vercel.app/",
+  },
+  {
     title: "IntelliJourney",
     shortDescription:
       "Analytics and reporting platform integrating the Canvas LMS API and Firebase to surface educational data insights.",
+    role: "Integrates the Canvas LMS API with Firebase; 6-month team project using Jira and Confluence.",
     longDescription:
       "IntelliJourney was built to help students and educators make sense of learning data that was previously locked away in Canvas LMS. It pulls assignment, grade, and engagement data via the Canvas API and presents it in a clean, actionable dashboard backed by Firebase for real-time updates.",
     features: [
@@ -35,20 +55,21 @@ const projects: Project[] = [
     liveDemo: "https://www.intellijourney.education/",
   },
   {
-    title: "Sua Hair Studio Booking System",
+    title: "Bias in Job Salaries",
     shortDescription:
-      "Full-stack booking system for a real Melbourne hair salon, built with React, TypeScript, and Firebase.",
+      "Machine learning report detecting salary bias, achieving a 15% improvement in prediction accuracy.",
+    role: "15% improvement in prediction accuracy over baseline.",
     longDescription:
-      "A production booking system built for Sua Hair Studio in Melbourne. Features a customer-facing booking flow and an admin dashboard for managing appointments, staff, and availability. Built with React, TypeScript, and Firebase Firestore.",
+      "A data science project investigating bias in job salary data using machine learning. Cleaned and processed a large dataset of job listings, engineered features to isolate demographic signals, and compared multiple ML models to detect and quantify salary bias.",
     features: [
-      "Real-time appointment booking with Firebase Firestore",
-      "Admin dashboard for managing bookings and availability",
-      "Staff and service management",
-      "Mobile-responsive booking interface",
+      "Data cleaning and feature engineering with Pandas",
+      "Comparison of regression models including Random Forest and XGBoost",
+      "15% improvement in prediction accuracy over baseline",
+      "Visualisations of bias patterns across job categories",
     ],
-    tech: ["React", "TypeScript", "Firebase", "React Router"],
-    github: "https://github.com/SJKangAU/sua-hair",
-    liveDemo: "https://sua-hair.vercel.app/",
+    tech: ["Python", "Pandas", "NumPy", "Scikit-learn"],
+    // Repo on inaccessible account — report to be hosted on deployment
+    report: "/MachineLearning_SalaryBias_Report.pdf",
   },
   {
     title: "Multi-threaded Whiteboard",
@@ -64,22 +85,6 @@ const projects: Project[] = [
     ],
     tech: ["Java", "Multi-threading", "Networking", "Swing"],
     github: "https://github.com/SJKangAU/JavaWhiteBoard",
-  },
-  {
-    title: "Bias in Job Salaries",
-    shortDescription:
-      "Machine learning report detecting salary bias, achieving a 15% improvement in prediction accuracy.",
-    longDescription:
-      "A data science project investigating bias in job salary data using machine learning. Cleaned and processed a large dataset of job listings, engineered features to isolate demographic signals, and compared multiple ML models to detect and quantify salary bias.",
-    features: [
-      "Data cleaning and feature engineering with Pandas",
-      "Comparison of regression models including Random Forest and XGBoost",
-      "15% improvement in prediction accuracy over baseline",
-      "Visualisations of bias patterns across job categories",
-    ],
-    tech: ["Python", "Pandas", "NumPy", "Scikit-learn"],
-    // Repo on inaccessible account — report to be hosted on deployment
-    report: "/MachineLearning_SalaryBias_Report.pdf",
   },
   {
     title: "Computer Vision Project",
@@ -160,9 +165,9 @@ export default function Projects({ darkMode }: ProjectsProps) {
 
   // Theme-based styles
   const border = darkMode ? "border-gray-800" : "border-gray-300";
-  const accent = darkMode ? "text-blue-400" : "text-violet-600";
+  const accent = darkMode ? "text-blue-400" : "text-violet-700";
   const heading = darkMode ? "text-white" : "text-gray-900";
-  const muted = darkMode ? "text-gray-400" : "text-gray-500";
+  const muted = darkMode ? "text-gray-400" : "text-gray-600";
   const card = darkMode
     ? "bg-gray-900/60 border-gray-800 hover:border-blue-500/50"
     : "bg-white/50 border-gray-300 hover:border-violet-400";
@@ -171,14 +176,14 @@ export default function Projects({ darkMode }: ProjectsProps) {
     : "bg-violet-100 border-violet-300 text-violet-700";
   const linkBtn = darkMode
     ? "border-gray-700 text-gray-400 hover:border-blue-500 hover:text-blue-300"
-    : "border-gray-300 text-gray-500 hover:border-violet-500 hover:text-violet-600";
+    : "border-gray-300 text-gray-600 hover:border-violet-500 hover:text-violet-700";
   const featureDot = darkMode ? "bg-blue-400" : "bg-violet-500";
   const expandedCard = darkMode
     ? "bg-[#0d1225] border-blue-500/40"
     : "bg-white border-violet-400/60";
   const closeBtn = darkMode
     ? "text-gray-400 hover:text-white border-gray-700 hover:border-gray-400"
-    : "text-gray-500 hover:text-gray-900 border-gray-300 hover:border-gray-500";
+    : "text-gray-600 hover:text-gray-900 border-gray-300 hover:border-gray-500";
 
   // Animate the expanded card from the clicked card's rect to the grid's rect
   const getExpandedStyle = (): React.CSSProperties => {
@@ -343,6 +348,17 @@ export default function Projects({ darkMode }: ProjectsProps) {
                 cardRefs.current[project.title] = el;
               }}
               onClick={() => open(project.title)}
+              role="button"
+              tabIndex={0}
+              aria-label={`${project.title}: open details`}
+              onKeyDown={(e) => {
+                // Ignore keys pressed on inner links/buttons
+                if (e.target !== e.currentTarget) return;
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  open(project.title);
+                }
+              }}
               className={`flex flex-col rounded-xl border p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
                 darkMode
                   ? "hover:shadow-blue-900/30"
@@ -358,9 +374,20 @@ export default function Projects({ darkMode }: ProjectsProps) {
               </div>
 
               {/* Short description */}
-              <p className={`text-sm leading-relaxed flex-1 mb-4 ${muted}`}>
+              <p className={`text-sm leading-relaxed mb-3 ${muted}`}>
                 {project.shortDescription}
               </p>
+
+              {/* My role / outcome */}
+              {project.role && (
+                <p className="text-sm leading-relaxed mb-4 flex-1">
+                  <span className={`font-semibold ${accent}`}>
+                    My role / outcome:{" "}
+                  </span>
+                  <span className={muted}>{project.role}</span>
+                </p>
+              )}
+              {!project.role && <div className="flex-1" />}
 
               {/* Tech chips */}
               <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
@@ -386,12 +413,17 @@ export default function Projects({ darkMode }: ProjectsProps) {
       {expandedId && expandedProject && (
         <div
           style={getExpandedStyle()}
+          role="dialog"
+          aria-modal="true"
+          aria-label={expandedProject.title}
           className={`overflow-auto border shadow-2xl ${expandedCard}`}
         >
           <div className="p-8 h-full flex flex-col">
             {/* Close button */}
             <button
               onClick={close}
+              aria-label="Close project details"
+              autoFocus
               className={`absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg border text-sm transition-all ${closeBtn}`}
             >
               ✕
@@ -421,6 +453,15 @@ export default function Projects({ darkMode }: ProjectsProps) {
                   </span>
                 ))}
               </div>
+
+              {expandedProject.role && (
+                <p className="text-sm leading-relaxed mb-4">
+                  <span className={`font-semibold ${accent}`}>
+                    My role / outcome:{" "}
+                  </span>
+                  <span className={muted}>{expandedProject.role}</span>
+                </p>
+              )}
 
               {/* Full description */}
               <p className={`text-sm leading-relaxed mb-6 ${muted}`}>
