@@ -1,6 +1,6 @@
 # my-portfolio
 
-A personal portfolio website built with React, TypeScript, Vite, and Tailwind CSS v4.
+A portfolio website for business analysis and automation roles, built with React, TypeScript, Vite, and Tailwind CSS v4. It leads with a real-client case study (requirements, process change, test evidence and BA documents) alongside software projects.
 
 Live site: https://sjkang.dev
 
@@ -11,10 +11,14 @@ Live site: https://sjkang.dev
 - Dark / light mode toggle with `localStorage` persistence
 - Fixed navbar with smooth-scroll active section detection and animated underline
 - Responsive navbar with hamburger menu on mobile
-- Hero section with staggered fade-in animations, mouse parallax, and resume link
+- Hero section with staggered fade-in animations, mouse parallax, and a single primary call to action
 - About section with bio, education cards, and categorised tech stack
-- Projects section with expandable card-to-grid animation, GitHub, live demo, and report links
+- Work Experience section
+- Case study section: summary cards up front, expandable requirements, as-is / to-be process diagram, test scenarios, stakeholder analysis, scope, RAID log and traceability
+- Projects section with featured cards, a compact "More work" row, expandable detail view, and GitHub, live demo and report links
 - Contact section with email, LinkedIn, GitHub, and resume cards
+- Scroll-reveal animations, scroll progress bar, count-up numbers and magnetic buttons, all respecting `prefers-reduced-motion`
+- Resume button in the navbar (desktop and mobile)
 
 ## Tech Stack
 
@@ -65,19 +69,21 @@ npm run lint
 
 ```
 my-portfolio/
-├── public/
-│   ├── vite.svg
-│   └── Jason_Kang_Resume.pdf
+├── public/                     # resume.pdf, project report PDFs, favicon, OG image
 ├── src/
-│   ├── assets/
-│   │   └── react.svg
 │   ├── components/
-│   │   ├── Navbar.tsx          # Fixed navbar with scroll detection and mobile hamburger menu
+│   │   ├── Navbar.tsx          # Fixed navbar, scroll detection, mobile menu, resume button
 │   │   ├── SpaceBackground.tsx # Canvas star field, parallax, constellation interactions
-│   │   ├── Hero.tsx            # Landing section with name, tagline, CTAs, and resume link
+│   │   ├── Hero.tsx            # Landing section with name, tagline and calls to action
 │   │   ├── About.tsx           # Bio, education, and tech stack
-│   │   ├── Projects.tsx        # Expandable project cards with links
-│   │   └── Contact.tsx         # Email, LinkedIn, GitHub, and resume cards
+│   │   ├── Experience.tsx      # Work experience
+│   │   ├── Projects.tsx        # Featured and compact project cards with links
+│   │   ├── CaseStudy.tsx       # Sua Hair case study and BA documents
+│   │   ├── Contact.tsx         # Email, LinkedIn, GitHub, and resume cards
+│   │   ├── CountUp.tsx         # Animated number counter
+│   │   ├── Magnetic.tsx        # Cursor-attracted button wrapper
+│   │   └── ScrollProgress.tsx  # Scroll progress bar
+│   ├── lib/                    # Scroll-reveal helpers
 │   ├── App.tsx
 │   ├── index.css
 │   └── main.tsx
@@ -91,14 +97,14 @@ my-portfolio/
 
 ## Projects
 
-| Project                   | Links                                                                                    |
-| ------------------------- | ---------------------------------------------------------------------------------------- |
-| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)                                       |
-| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard)                                     |
-| Recipe App                | Report (coming soon)                                                                     |
-| Bias in Job Salaries      | [Report](https://github.com/SJKangAU/my-portfolio/MachineLearning_SalaryBias_Report.pdf) |
-| Computer Vision Project   | [Report](https://github.com/SJKangAU/my-portfolio/ComputerVision_Report.pdf)             |
-| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)                                       |
+| Project                   | Links                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| Sua Hair Booking System   | [GitHub](https://github.com/SJKangAU/sua-hair), [Live](https://sua-hair.vercel.app/) |
+| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)                             |
+| Bias in Job Salaries      | [Report](public/MachineLearning_SalaryBias_Report.pdf)                         |
+| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard)                           |
+| Computer Vision Project   | [Report](public/ComputerVision_Report.pdf)                                     |
+| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)                             |
 
 ## License
 
