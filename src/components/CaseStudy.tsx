@@ -22,6 +22,38 @@ const requirements = {
   "Won't (this release)": ["Online payments.", "SMS reminders, until consent rules are covered."],
 };
 
+const stakeholders = [
+  ["Owner and director", "See all stylists live, approve bookings, manage services and prices, build in the salon's own rules", "High / High", "Losing control of the diary, a double booking in front of a client", "Manage closely: walkthroughs, sign-off on requirements"],
+  ["Stylists", "See only their own bookings; stop being interrupted to take bookings", "Medium / High", "Extra admin on the floor, being overbooked", "Keep informed and involved"],
+  ["Clients", "Book any time in under 3 minutes without an account", "Low / Medium", "Privacy of name and phone, a booking that silently disappears", "Keep satisfied; represented by the owner until tested"],
+  ["Fresha and hosting providers", "Dependencies: Fresha holds client data until the import is verified", "Medium / Low", "Cost and terms changing; losing data access too early", "Monitor; keep Fresha active until verified"],
+];
+
+const scope = [
+  ["In scope", "Online booking without accounts. Admin timeline, bookings and client records. Phased services. Roles. Pending requests with a 24-hour hold. Fresha client import. Waitlist and email notifications."],
+  ["Not yet", "Service rules and hair-history screening (needs the owner workshop). Follow-up reminders."],
+  ["Out of scope", "Payments, customer accounts, multiple locations, payroll, replacing the Fresha marketplace."],
+  ["Assumptions", "One location, five stylists, closed Mondays, 10am to 6pm, 30-minute slots, Australian mobile numbers."],
+];
+
+const raid = [
+  ["R1", "A booking is overwritten or double-booked", "6", "Server-side clash check under a lock; race tests", "Mitigated in tests"],
+  ["R2", "Owner and stylists fall back to old habits", "6", "Weekly walkthroughs; one-week pilot alongside the current process", "Open"],
+  ["R3", "Client names and phone numbers exposed", "3", "Minimum data collected; public availability has no personal data; lockdown tests", "Mitigated in tests"],
+  ["R9", "Success cannot be proven without a baseline", "6", "Compute bookings, cancellations and no-shows from the Fresha export before the switch", "Open"],
+  ["R10", "The switch loses what Fresha provided (reminders, card payments, marketplace)", "6", "List what the salon uses, replace the essentials, run both side by side", "Open"],
+];
+
+const trace = [
+  ["R1", "No double bookings", "Must", "Parity with Fresha", "Eight simultaneous requests give one booking", "Automated pass"],
+  ["R2", "Book into processing windows", "Must", "Owner pain point", "Phase overlap tests", "Automated pass"],
+  ["R3", "Book online 24/7 in under 3 minutes", "Must", "Parity with Fresha", "Browser booking flow tests", "Flow passes; 3-minute target not measured"],
+  ["R5", "Manage stylists, services and prices", "Should", "Owner pain point", "Admin write tests", "Automated pass"],
+  ["R7", "Owner approves or declines requests", "Should", "Business case", "Approval and email logic tests", "Logic passes; email delivery not verified"],
+  ["R8", "Service rules and hair history", "Must", "Owner pain point", "None yet", "Not built"],
+  ["R9", "Fresha client import", "Must", "Transition", "Import tests up to 10,000 rows", "Synthetic files only; real export not run"],
+];
+
 const testCases = [
   {
     id: "TC1",
@@ -75,6 +107,36 @@ export default function CaseStudy({ darkMode }: CaseStudyProps) {
   const text = darkMode ? "#e5e7eb" : "#1f2937";
   const pain = darkMode ? "#f87171" : "#b91c1c";
 
+  const table = (head: string[], rows: string[][]) => (
+    <div className="overflow-x-auto">
+      <table className={`w-full text-sm ${muted}`}>
+        <thead>
+          <tr className={`text-left ${heading}`}>
+            {head.map((h) => (
+              <th key={h} className="pr-4 pb-2 font-semibold">
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r[0]} className={`border-t ${border}`}>
+              {r.map((c, i) => (
+                <td
+                  key={i}
+                  className={`pr-4 py-2 align-top min-w-24 ${i === 0 ? heading : ""}`}
+                >
+                  {c}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
   const step = (x: number, y: number, label: string, warn = false) => (
     <g key={`${x}-${y}`}>
       <rect
@@ -109,7 +171,7 @@ export default function CaseStudy({ darkMode }: CaseStudyProps) {
         </h2>
         <p className={`mb-8 text-base max-w-xl ${muted}`}>
           Sua Hair: a booking system for a real salon, moving off Fresha.
-          Requirements, process change and test evidence.
+          Requirements, process change, test evidence and the analysis documents behind them.
         </p>
 
         <button
@@ -259,6 +321,72 @@ export default function CaseStudy({ darkMode }: CaseStudyProps) {
                 email delivery, Safari and phones, and user acceptance testing
                 with the salon.
               </p>
+            </div>
+            {/* BA artefacts */}
+            <div className={`rounded-xl border p-6 ${card}`}>
+              <h3 className={`text-lg font-bold mb-1 ${heading}`}>
+                4. Stakeholder analysis
+              </h3>
+              <p className={`text-xs mb-4 ${muted}`}>
+                Ratings are my own assessment (influence / interest), not yet
+                validated with the owner.
+              </p>
+              {table(
+                ["Stakeholder", "Needs", "Influence / interest", "Main concern", "Engagement"],
+                stakeholders,
+              )}
+            </div>
+
+            <div className={`rounded-xl border p-6 ${card}`}>
+              <h3 className={`text-lg font-bold mb-4 ${heading}`}>
+                5. Scope statement
+              </h3>
+              {table(["", "Detail"], scope)}
+            </div>
+
+            <div className={`rounded-xl border p-6 ${card}`}>
+              <h3 className={`text-lg font-bold mb-1 ${heading}`}>
+                6. RAID log (top risks)
+              </h3>
+              <p className={`text-xs mb-4 ${muted}`}>
+                Score = likelihood x impact (1 to 3 each). A score of 6 or more
+                needs an owner and a response. The full log also holds
+                assumptions, issues and dependencies.
+              </p>
+              {table(["ID", "Risk", "Score", "Response", "Status"], raid)}
+            </div>
+
+            <div className={`rounded-xl border p-6 ${card}`}>
+              <h3 className={`text-lg font-bold mb-1 ${heading}`}>
+                7. Requirements traceability
+              </h3>
+              <p className={`text-xs mb-4 ${muted}`}>
+                Each requirement links to its source, its tests and what is
+                actually verified. Nothing is marked verified by user
+                acceptance, because none has happened yet.
+              </p>
+              {table(
+                ["ID", "Requirement", "Priority", "Source", "Tests", "Verified?"],
+                trace,
+              )}
+            </div>
+
+            <div className={`rounded-xl border p-6 ${card}`}>
+              <h3 className={`text-lg font-bold mb-3 ${heading}`}>
+                8. Also produced, and what is next
+              </h3>
+              <p className={`text-sm mb-3 ${muted}`}>
+                Also in the full document: business case, glossary,
+                success measures with a Fresha baseline, non-functional
+                requirements, decision log, defect log, user acceptance test
+                plans, and a workshop pack for the owner covering service
+                profiles, hair-history rules and reminder consent.
+              </p>
+              <ul className={`space-y-1.5 text-sm ${muted}`}>
+                <li>• Run the owner workshop and build the service rules from it.</li>
+                <li>• Compute the baseline from the Fresha export.</li>
+                <li>• Run a one-week pilot alongside the current process, then user acceptance tests.</li>
+              </ul>
             </div>
           </div>
         )}
