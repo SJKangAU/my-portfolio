@@ -7,7 +7,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
-  const [activeSection, setActiveSection] = useState<string>("about");
+  const [activeSection, setActiveSection] = useState<string>("hero");
   const [menuOpen, setMenuOpen] = useState(false);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
   const navRef = useRef<HTMLDivElement>(null);
@@ -63,9 +63,13 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
       {/* ── Main nav row ── */}
       <div className="flex justify-between items-center px-6 py-4">
         {/* Logo / name */}
-        <h1 className="text-base font-bold tracking-wide truncate mr-4">
+        <a
+          href="#hero"
+          aria-label="Jason Kang, back to top"
+          className="text-base font-bold tracking-wide truncate mr-4"
+        >
           Jason Kang
-        </h1>
+        </a>
 
         {/* Desktop nav links — hidden on mobile */}
         <div
@@ -99,9 +103,23 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
             }}
           />
 
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`ml-2 px-3 py-1 rounded-md text-xs font-semibold transition-all ${
+              darkMode
+                ? "bg-blue-600 hover:bg-blue-500 text-white"
+                : "bg-violet-600 hover:bg-violet-500 text-white"
+            }`}
+          >
+            Resume
+          </a>
+
           {/* Dark/light toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             className={`ml-6 px-3 py-1 rounded-md border text-xs font-medium transition-all ${
               darkMode
                 ? "bg-gray-900 border-gray-600 text-gray-200 hover:bg-gray-800"
@@ -118,6 +136,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={() => setDarkMode(!darkMode)}
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             className={`px-2 py-1 rounded-md border text-xs font-medium transition-all ${
               darkMode
                 ? "bg-gray-900 border-gray-600 text-gray-200"
@@ -160,7 +179,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
       {/* ── Mobile dropdown menu ── */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-smooth ${
-          menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div
@@ -184,6 +203,17 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
               {section.label}
             </a>
           ))}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleNavClick}
+            className={`pt-3 font-semibold ${
+              darkMode ? "text-blue-400" : "text-violet-700"
+            }`}
+          >
+            Resume ↗
+          </a>
         </div>
       </div>
     </nav>

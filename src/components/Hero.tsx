@@ -108,14 +108,14 @@ export default function Hero({ darkMode }: HeroProps) {
           {/* Primary CTA */}
           <Magnetic>
             <a
-              href="#projects"
+              href="#case-study"
               className={`block px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 shadow-lg hover:scale-105 active:scale-95 ${
                 darkMode
                   ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40"
                   : "bg-violet-600 hover:bg-violet-500 text-white shadow-violet-200"
               }`}
             >
-              View Projects
+              View Case Study
             </a>
           </Magnetic>
 
@@ -134,27 +134,12 @@ export default function Hero({ darkMode }: HeroProps) {
           </a>
 
           <a
-            href="https://www.linkedin.com/in/sj-kang"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
-              darkMode
-                ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
-                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-700"
-            }`}
-          >
-            LinkedIn ↗
-          </a>
-
-          <a
             href="#contact"
-            className={`px-6 py-3 rounded-lg font-semibold text-sm border transition-all duration-200 hover:scale-105 active:scale-95 ${
-              darkMode
-                ? "border-gray-600 text-gray-300 hover:border-blue-500 hover:text-blue-300"
-                : "border-gray-300 text-gray-700 hover:border-violet-500 hover:text-violet-700"
+            className={`px-3 py-3 text-sm font-semibold underline-offset-4 hover:underline ${
+              darkMode ? "text-blue-300" : "text-violet-700"
             }`}
           >
-            Get in Touch
+            Get in touch →
           </a>
         </div>
       </div>

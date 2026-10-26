@@ -43,7 +43,7 @@ export default function SpaceBackground({ darkMode }: SpaceBackgroundProps) {
     window.addEventListener("resize", resize);
 
     // Generate stars
-    starsRef.current = Array.from({ length: STAR_COUNT }, () => ({
+    starsRef.current = Array.from({ length: window.innerWidth < 768 ? STAR_COUNT / 2 : STAR_COUNT }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight * 3, // spread over 3x viewport height
       baseY: Math.random() * window.innerHeight * 3,

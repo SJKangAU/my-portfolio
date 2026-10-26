@@ -120,7 +120,15 @@ export default function Contact({ darkMode }: ContactProps) {
         {/* Footer note */}
         <p {...reveal(0)} className={`mt-16 text-xs ${muted}`}>
           © {new Date().getFullYear()} Jason Kang · Built with React & Tailwind
-          CSS
+          CSS ·{" "}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2"
+          >
+            Resume
+          </a>
         </p>
       </div>
     </section>

@@ -179,8 +179,26 @@ export default function CaseStudy({ darkMode }: CaseStudyProps) {
           Requirements, process change, test evidence and the analysis documents behind them.
         </p>
 
-        <button
+        <dl
           {...reveal(3)}
+          className="mb-8 grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3"
+        >
+          {[
+            ["Problem", "Salon off Fresha: one-size slots, manual fixes, fees"],
+            ["My role", "Business analyst and developer for a real client"],
+            ["Evidence", "672 automated tests; salon acceptance testing still to do"],
+          ].map(([k, v]) => (
+            <div key={k} className={`rounded-xl border p-4 text-left ${card}`}>
+              <dt className={`text-xs font-semibold uppercase tracking-wider mb-1 ${accent}`}>
+                {k}
+              </dt>
+              <dd className={`text-sm ${muted}`}>{v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <button
+          {...reveal(4)}
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-controls="case-study-content"

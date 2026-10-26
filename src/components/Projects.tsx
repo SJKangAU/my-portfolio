@@ -10,6 +10,8 @@ interface Project {
   shortDescription: string;
   // Short "My role / outcome" line shown on the card and in the expanded view
   role?: string;
+  // Featured projects get full-size cards; the rest sit under "More work"
+  featured?: boolean;
   longDescription: string;
   features: string[];
   tech: string[];
@@ -35,6 +37,7 @@ const projects: Project[] = [
       "Mobile-responsive booking interface",
     ],
     tech: ["React", "TypeScript", "Firebase", "React Router"],
+    featured: true,
     github: "https://github.com/SJKangAU/sua-hair",
     liveDemo: "https://sua-hair.vercel.app/",
   },
@@ -52,6 +55,7 @@ const projects: Project[] = [
       "Role-based access for students and educators",
     ],
     tech: ["React", "Firebase", "Canvas API", "TypeScript"],
+    featured: true,
     // Private repo — linking to live site instead
     liveDemo: "https://www.intellijourney.education/",
   },
@@ -76,6 +80,7 @@ const projects: Project[] = [
     title: "Multi-threaded Whiteboard",
     shortDescription:
       "Real-time collaborative whiteboard with live drawing support built in Java using multi-threading.",
+    role: "Built the multi-threaded server and shared canvas in Java.",
     longDescription:
       "A networked whiteboard application that allows multiple users to draw simultaneously in real time. Built in Java with a custom multi-threaded server to handle concurrent connections, ensuring low-latency updates across all connected clients.",
     features: [
@@ -91,6 +96,7 @@ const projects: Project[] = [
     title: "Computer Vision Project",
     shortDescription:
       "Siamese neural network with triplet loss to identify visually similar images in datasets.",
+    role: "Trained and evaluated the model; findings written up in a report.",
     longDescription:
       "Designed and trained a Siamese neural network using triplet loss to learn image similarity embeddings. The model was evaluated on its ability to correctly identify matching images from a large dataset, outperforming baseline cosine similarity approaches.",
     features: [
@@ -107,6 +113,7 @@ const projects: Project[] = [
     title: "Portfolio Website",
     shortDescription:
       "This site — built from scratch with React, TypeScript, and Tailwind CSS v4 with a space theme.",
+    role: "Designed and built end to end; deployed on Vercel.",
     longDescription:
       "A fully custom portfolio site built while learning React and TypeScript. Features a space-themed background with parallax scrolling stars, constellation cursor interactions rendered on canvas, dark/light mode with localStorage persistence, and smooth scroll-based navbar highlighting.",
     features: [
@@ -132,6 +139,8 @@ export default function Projects({ darkMode }: ProjectsProps) {
   const [startRect, setStartRect] = useState<DOMRect | null>(null);
   const [gridRect, setGridRect] = useState<DOMRect | null>(null);
 
+  const featured = projects.filter((p) => p.featured);
+  const more = projects.filter((p) => !p.featured);
   const expandedProject = projects.find((p) => p.title === expandedId) ?? null;
 
   // Open — measure rects then trigger animation
@@ -318,6 +327,69 @@ export default function Projects({ darkMode }: ProjectsProps) {
     );
   };
 
+  const renderCard = (project: Project, i: number, compact: boolean) => (
+    <div
+      key={project.title}
+      {...reveal(i % 3)}
+      ref={(el) => {
+        cardRefs.current[project.title] = el;
+      }}
+      onClick={() => open(project.title)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${project.title}: open details`}
+      onKeyDown={(e) => {
+        // Ignore keys pressed on inner links/buttons
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          open(project.title);
+        }
+      }}
+      className={`flex flex-col rounded-xl border cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+        compact ? "p-4" : "p-6"
+      } ${card} ${
+        darkMode ? "hover:shadow-blue-900/30" : "hover:shadow-violet-200/60"
+      }`}
+    >
+      <div className="flex justify-between items-start mb-2">
+        <h3 className={`font-bold ${compact ? "text-base" : "text-lg"} ${heading}`}>
+          {project.title}
+        </h3>
+        <span className={`text-sm ${muted}`}>↗</span>
+      </div>
+
+      <p
+        className={`text-sm leading-relaxed mb-3 ${muted} ${
+          compact ? "line-clamp-3" : ""
+        }`}
+      >
+        {project.shortDescription}
+      </p>
+
+      {project.role && (
+        <p className="text-sm leading-relaxed mb-4 flex-1">
+          <span className={`font-semibold ${accent}`}>Outcome: </span>
+          <span className={muted}>{project.role}</span>
+        </p>
+      )}
+      {!project.role && <div className="flex-1" />}
+
+      <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
+        {project.tech.slice(0, compact ? 3 : undefined).map((t) => (
+          <span
+            key={t}
+            className={`px-2 py-0.5 rounded-full text-xs font-medium border ${chipBg}`}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+
+      {renderLinks(project, false)}
+    </div>
+  );
+
   return (
     <section
       id="projects"
@@ -341,76 +413,21 @@ export default function Projects({ darkMode }: ProjectsProps) {
           Click any card to learn more.
         </p>
 
-        {/* ── Card grid ── */}
-        <div
-          ref={gridRef}
-          className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {projects.map((project, i) => (
-            <div
-              key={project.title}
-              {...reveal(i % 3)}
-              ref={(el) => {
-                cardRefs.current[project.title] = el;
-              }}
-              onClick={() => open(project.title)}
-              role="button"
-              tabIndex={0}
-              aria-label={`${project.title}: open details`}
-              onKeyDown={(e) => {
-                // Ignore keys pressed on inner links/buttons
-                if (e.target !== e.currentTarget) return;
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  open(project.title);
-                }
-              }}
-              className={`flex flex-col rounded-xl border p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${card} ${
-                darkMode
-                  ? "hover:shadow-blue-900/30"
-                  : "hover:shadow-violet-200/60"
-              }`}
-            >
-              {/* Title row */}
-              <div className="flex justify-between items-start mb-2">
-                <h3 className={`text-lg font-bold ${heading}`}>
-                  {project.title}
-                </h3>
-                <span className={`text-sm ${muted}`}>↗</span>
-              </div>
+        {/* ── Card grid: featured BA-relevant work first, the rest compact ── */}
+        <div ref={gridRef} className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {featured.map((project, i) => renderCard(project, i, false))}
+          </div>
 
-              {/* Short description */}
-              <p className={`text-sm leading-relaxed mb-3 ${muted}`}>
-                {project.shortDescription}
-              </p>
-
-              {/* My role / outcome */}
-              {project.role && (
-                <p className="text-sm leading-relaxed mb-4 flex-1">
-                  <span className={`font-semibold ${accent}`}>
-                    My role / outcome:{" "}
-                  </span>
-                  <span className={muted}>{project.role}</span>
-                </p>
-              )}
-              {!project.role && <div className="flex-1" />}
-
-              {/* Tech chips */}
-              <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className={`px-2 py-0.5 rounded-full text-xs font-medium border ${chipBg}`}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Action buttons — small size on card */}
-              {renderLinks(project, false)}
-            </div>
-          ))}
+          <h3
+            {...reveal(0)}
+            className={`mt-12 mb-5 text-sm tracking-[0.25em] uppercase font-medium text-center ${accent}`}
+          >
+            More work
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {more.map((project, i) => renderCard(project, i, true))}
+          </div>
         </div>
       </div>
 
