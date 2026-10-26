@@ -25,12 +25,6 @@ const education = [
     institution: "The University of Melbourne",
     period: "Graduated 2023",
   },
-  {
-    degree: "Bachelor of Agriculture",
-    major: "Agricultural Economics",
-    institution: "The University of Melbourne",
-    period: "Graduated 2020",
-  },
 ];
 
 export default function About({ darkMode }: AboutProps) {
@@ -75,11 +69,8 @@ export default function About({ darkMode }: AboutProps) {
               </h3>
               <p className={`text-base leading-relaxed ${muted}`}>
                 I'm a Melbourne-based technology graduate with a Master of IT
-                (Computing) from the University of Melbourne. My background is a
-                bit unconventional — I started in Agricultural Economics before
-                moving into technology, which means I bring a problem-solving
-                mindset that's grounded in real-world constraints, not just
-                code.
+                (Computing) from the University of Melbourne, working across business analysis,
+                process improvement and software development.
               </p>
               <p className={`mt-4 text-base leading-relaxed ${muted}`}>
                 I move between the business and the technology: understanding
