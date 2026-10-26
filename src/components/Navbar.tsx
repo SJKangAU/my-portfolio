@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ScrollProgress from "./ScrollProgress";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -57,6 +58,8 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
           : "bg-white/60 border-gray-300 text-black"
       }`}
     >
+      <ScrollProgress darkMode={darkMode} />
+
       {/* ── Main nav row ── */}
       <div className="flex justify-between items-center px-6 py-4">
         {/* Logo / name */}
@@ -87,7 +90,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
 
           {/* Animated underline indicator */}
           <span
-            className={`absolute bottom-0 h-[2px] transition-all duration-300 ease-in-out ${
+            className={`absolute bottom-0 h-[2px] transition-all duration-300 ease-smooth ${
               darkMode ? "bg-blue-500" : "bg-purple-500"
             }`}
             style={{
@@ -105,7 +108,9 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                 : "bg-gray-100 border-gray-400 text-gray-700 hover:bg-gray-200"
             }`}
           >
-            {darkMode ? "☀️ Light" : "🌙 Dark"}
+            <span key={String(darkMode)} className="theme-icon">
+              {darkMode ? "☀️ Light" : "🌙 Dark"}
+            </span>
           </button>
         </div>
 
@@ -119,7 +124,9 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
                 : "bg-gray-100 border-gray-400 text-gray-700"
             }`}
           >
-            {darkMode ? "☀️" : "🌙"}
+            <span key={String(darkMode)} className="theme-icon">
+              {darkMode ? "☀️" : "🌙"}
+            </span>
           </button>
 
           {/* Hamburger button */}
@@ -152,7 +159,7 @@ export default function Navbar({ darkMode, setDarkMode }: NavbarProps) {
 
       {/* ── Mobile dropdown menu ── */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-smooth ${
           menuOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         }`}
       >

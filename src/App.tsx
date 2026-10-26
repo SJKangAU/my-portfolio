@@ -7,6 +7,7 @@ import Projects from "./components/Projects";
 import CaseStudy from "./components/CaseStudy";
 import Contact from "./components/Contact";
 import SpaceBackground from "./components/SpaceBackground";
+import { useScrollReveal } from "./lib/useScrollReveal";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -19,6 +20,8 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
+
+  useScrollReveal();
 
   return (
     <div

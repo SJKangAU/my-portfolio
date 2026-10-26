@@ -1,3 +1,4 @@
+import { reveal } from "../lib/reveal";
 import { useState, useEffect, useRef } from "react";
 
 interface ProjectsProps {
@@ -325,14 +326,18 @@ export default function Projects({ darkMode }: ProjectsProps) {
       <div className="max-w-5xl mx-auto flex flex-col items-center">
         {/* ── Section header ── */}
         <p
+          {...reveal(0)}
           className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
         >
           My Work
         </p>
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}>
+        <h2
+          {...reveal(1)}
+          className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}
+        >
           Projects
         </h2>
-        <p className={`mb-12 text-base ${muted}`}>
+        <p {...reveal(2)} className={`mb-12 text-base ${muted}`}>
           Click any card to learn more.
         </p>
 
@@ -341,9 +346,10 @@ export default function Projects({ darkMode }: ProjectsProps) {
           ref={gridRef}
           className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {projects.map((project) => (
+          {projects.map((project, i) => (
             <div
               key={project.title}
+              {...reveal(i % 3)}
               ref={(el) => {
                 cardRefs.current[project.title] = el;
               }}
