@@ -1,3 +1,4 @@
+import { reveal } from "../lib/reveal";
 interface AboutProps {
   darkMode: boolean;
 }
@@ -48,19 +49,23 @@ export default function About({ darkMode }: AboutProps) {
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
         {/* Section label */}
         <p
+          {...reveal(0)}
           className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
         >
           About Me
         </p>
 
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-12 ${heading}`}>
+        <h2
+          {...reveal(1)}
+          className={`text-4xl md:text-5xl font-extrabold mb-12 ${heading}`}
+        >
           Who I am
         </h2>
 
         {/* Two col grid — left aligned internally but centred as a whole */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-16 text-left">
           {/* Left col — Bio + Education */}
-          <div className="space-y-12">
+          <div {...reveal(2)} className="space-y-12">
             <div>
               <h3
                 className={`text-xs uppercase tracking-widest font-semibold mb-4 ${muted}`}
@@ -109,7 +114,7 @@ export default function About({ darkMode }: AboutProps) {
           </div>
 
           {/* Right col — Skills */}
-          <div>
+          <div {...reveal(3)}>
             <h3
               className={`text-xs uppercase tracking-widest font-semibold mb-4 ${muted}`}
             >

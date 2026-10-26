@@ -1,3 +1,5 @@
+import { reveal } from "../lib/reveal";
+import CountUp from "./CountUp";
 interface ExperienceProps {
   darkMode: boolean;
 }
@@ -41,6 +43,12 @@ const roles: Role[] = [
   },
 ];
 
+const stats = [
+  { end: 10, suffix: "%", label: "fewer technical service requests (Crown Melbourne)" },
+  { end: 3, suffix: "", label: "Crown properties in the improvement initiative" },
+  { end: 15, suffix: "%", label: "prediction accuracy gain (ML salary bias project)" },
+];
+
 export default function Experience({ darkMode }: ExperienceProps) {
   const border = darkMode ? "border-gray-800" : "border-gray-300";
   const accent = darkMode ? "text-blue-400" : "text-violet-700";
@@ -58,18 +66,39 @@ export default function Experience({ darkMode }: ExperienceProps) {
     >
       <div className="max-w-3xl mx-auto flex flex-col items-center">
         <p
+          {...reveal(0)}
           className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
         >
           Where I've Worked
         </p>
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-12 ${heading}`}>
+        <h2
+          {...reveal(1)}
+          className={`text-4xl md:text-5xl font-extrabold mb-12 ${heading}`}
+        >
           Work Experience
         </h2>
 
+        {/* Headline numbers, all taken from the roles and projects on this site */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              {...reveal(i)}
+              className={`rounded-xl border p-5 text-center ${card}`}
+            >
+              <p className={`text-3xl font-extrabold ${accent}`}>
+                <CountUp end={stat.end} suffix={stat.suffix} />
+              </p>
+              <p className={`mt-1 text-xs ${muted}`}>{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="w-full space-y-6 text-left">
-          {roles.map((role) => (
+          {roles.map((role, i) => (
             <article
               key={`${role.company}-${role.period}`}
+              {...reveal(i)}
               className={`rounded-xl border p-6 ${card}`}
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 mb-4">

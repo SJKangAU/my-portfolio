@@ -1,3 +1,4 @@
+import { reveal } from "../lib/reveal";
 interface ContactProps {
   darkMode: boolean;
 }
@@ -74,25 +75,30 @@ export default function Contact({ darkMode }: ContactProps) {
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
         {/* Section label */}
         <p
+          {...reveal(0)}
           className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
         >
           Get In Touch
         </p>
 
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}>
+        <h2
+          {...reveal(1)}
+          className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}
+        >
           Contact
         </h2>
 
-        <p className={`mb-12 text-base max-w-lg ${muted}`}>
+        <p {...reveal(2)} className={`mb-12 text-base max-w-lg ${muted}`}>
           I'm open to new opportunities, collaborations, or just a chat. Feel
           free to reach out through any of the links below.
         </p>
 
         {/* Link cards — 2 cols on mobile, 4 on desktop */}
         <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-6">
-          {links.map((link) => (
+          {links.map((link, i) => (
             <a
               key={link.label}
+              {...reveal(i)}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -112,7 +118,7 @@ export default function Contact({ darkMode }: ContactProps) {
         </div>
 
         {/* Footer note */}
-        <p className={`mt-16 text-xs ${muted}`}>
+        <p {...reveal(0)} className={`mt-16 text-xs ${muted}`}>
           © {new Date().getFullYear()} Jason Kang · Built with React & Tailwind
           CSS
         </p>

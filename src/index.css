@@ -16,3 +16,74 @@ body,
 html {
   scroll-behavior: smooth;
 }
+
+/* ── Motion system ──
+   One easing curve and a small set of durations keep every animation consistent. */
+@theme {
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 700ms;
+}
+
+/* Scroll reveal: elements tagged with data-reveal fade up once when they enter the viewport.
+   Uses an animation (not a transition) so existing hover transitions keep working. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not(.in) {
+    opacity: 0;
+  }
+  [data-reveal].in {
+    animation: reveal-up var(--dur-slow) var(--ease-smooth)
+      var(--reveal-delay, 0ms) backwards;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Theme toggle icon swaps with a small spin */
+@keyframes theme-icon {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.theme-icon {
+  display: inline-block;
+  animation: theme-icon var(--dur-base) var(--ease-smooth);
+}
+
+/* Visible keyboard focus */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

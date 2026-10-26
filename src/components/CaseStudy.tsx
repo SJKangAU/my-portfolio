@@ -1,3 +1,4 @@
+import { reveal } from "../lib/reveal";
 import { useState } from "react";
 
 interface CaseStudyProps {
@@ -98,19 +99,24 @@ export default function CaseStudy({ darkMode }: CaseStudyProps) {
     >
       <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
         <p
+          {...reveal(0)}
           className={`text-sm tracking-[0.25em] uppercase font-medium mb-3 ${accent}`}
         >
           Illustrative Example
         </p>
-        <h2 className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}>
+        <h2
+          {...reveal(1)}
+          className={`text-4xl md:text-5xl font-extrabold mb-4 ${heading}`}
+        >
           Case Study
         </h2>
-        <p className={`mb-8 text-base max-w-xl ${muted}`}>
+        <p {...reveal(2)} className={`mb-8 text-base max-w-xl ${muted}`}>
           Illustrative example based on the Sua Hair feature set: requirements,
           process change and test cases.
         </p>
 
         <button
+          {...reveal(3)}
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-controls="case-study-content"

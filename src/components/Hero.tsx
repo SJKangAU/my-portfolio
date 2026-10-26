@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import Magnetic from "./Magnetic";
 
 interface HeroProps {
   darkMode: boolean;
@@ -105,16 +106,18 @@ export default function Hero({ darkMode }: HeroProps) {
           style={{ animationDelay: "0.65s" }}
         >
           {/* Primary CTA */}
-          <a
-            href="#projects"
-            className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 shadow-lg hover:scale-105 active:scale-95 ${
-              darkMode
-                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40"
-                : "bg-violet-600 hover:bg-violet-500 text-white shadow-violet-200"
-            }`}
-          >
-            View Projects
-          </a>
+          <Magnetic>
+            <a
+              href="#projects"
+              className={`block px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 shadow-lg hover:scale-105 active:scale-95 ${
+                darkMode
+                  ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40"
+                  : "bg-violet-600 hover:bg-violet-500 text-white shadow-violet-200"
+              }`}
+            >
+              View Projects
+            </a>
+          </Magnetic>
 
           {/* Resume — opens PDF in new tab, browser handles viewing and downloading */}
           <a
@@ -175,7 +178,7 @@ export default function Hero({ darkMode }: HeroProps) {
         }
         .animate-fade-in {
           opacity: 0;
-          animation: fade-in 0.7s ease forwards;
+          animation: fade-in 0.7s var(--ease-smooth) forwards;
         }
       `}</style>
     </section>
