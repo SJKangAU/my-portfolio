@@ -1,73 +1,105 @@
-# React + TypeScript + Vite
+# my-portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio website built with React, TypeScript, Vite, and Tailwind CSS v4.
 
-Currently, two official plugins are available:
+Live site: https://sjkang.dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Space-themed background with parallax star field across 3 depth layers
+- Constellation cursor interactions — lines draw between stars near your cursor
+- Dark / light mode toggle with `localStorage` persistence
+- Fixed navbar with smooth-scroll active section detection and animated underline
+- Responsive navbar with hamburger menu on mobile
+- Hero section with staggered fade-in animations, mouse parallax, and resume link
+- About section with bio, education cards, and categorised tech stack
+- Projects section with expandable card-to-grid animation, GitHub, live demo, and report links
+- Contact section with email, LinkedIn, GitHub, and resume cards
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- [React 19](https://react.dev/)
+- [TypeScript 5.9](https://www.typescriptlang.org/)
+- [Vite 7](https://vite.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [ESLint 9](https://eslint.org/) with TypeScript and React Hooks plugins
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js `>= 22.12.0` (required by Vite 7)
+- npm
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Install dependencies
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run the development server
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```
+my-portfolio/
+├── public/
+│   ├── vite.svg
+│   └── Jason_Kang_Resume.pdf
+├── src/
+│   ├── assets/
+│   │   └── react.svg
+│   ├── components/
+│   │   ├── Navbar.tsx          # Fixed navbar with scroll detection and mobile hamburger menu
+│   │   ├── SpaceBackground.tsx # Canvas star field, parallax, constellation interactions
+│   │   ├── Hero.tsx            # Landing section with name, tagline, CTAs, and resume link
+│   │   ├── About.tsx           # Bio, education, and tech stack
+│   │   ├── Projects.tsx        # Expandable project cards with links
+│   │   └── Contact.tsx         # Email, LinkedIn, GitHub, and resume cards
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+## Projects
+
+| Project                   | Links                                                                                    |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| IntelliJourney            | [Live Demo](https://www.intellijourney.education/)                                       |
+| Multi-threaded Whiteboard | [GitHub](https://github.com/SJKangAU/JavaWhiteBoard)                                     |
+| Recipe App                | Report (coming soon)                                                                     |
+| Bias in Job Salaries      | [Report](https://github.com/SJKangAU/my-portfolio/MachineLearning_SalaryBias_Report.pdf) |
+| Computer Vision Project   | [Report](https://github.com/SJKangAU/my-portfolio/ComputerVision_Report.pdf)             |
+| Portfolio Website         | [GitHub](https://github.com/SJKangAU/my-portfolio)                                       |
+
+## License
+
+MIT © SJKangAU
